@@ -1,0 +1,50 @@
+Id	Team Id	Player 1 Id	Player 2 Id	Value	InAction	OutAction	isGK
+N01A	Nankatsu	TsubasaOozora	-	3	RoundStart	RoundEnd	
+N01B	Nankatsu	GenzoWakabayashi	-	1	AnyTime	RoundEnd	
+N01C	Nankatsu	TaroMisaki	-	1	AnyTime	RoundEnd	
+N01D	Nankatsu	RyoIshizaki	-	1	AnyTime	RoundEnd	
+N01Y	Nankatsu	TsubasaOozora	TaroMisaki	0	TurnStart	TurnEnd	
+N01Z	Nankatsu	-	-	1	AnyTime	RoundEnd	
+N02A	Nankatsu	TsubasaOozora	-	2	RoundStart	RoundEnd	
+N02B	Nankatsu	GenzoWakabayashi	-	0	InsteadDiceRoll	Immediately	
+N02C	Nankatsu	TaroMisaki	-	0	AnyTime	Immediately	
+N02D	Nankatsu	RyoIshizaki	-	0	AnyTime	Immediately	
+N02Y	Nankatsu	TsubasaOozora	TaroMisaki	0	InsteadDiceRoll	Immediately	
+N02Z	Nankatsu	-	-	1	KickOff	YourNextTurn	
+N03A	Nankatsu	TsubasaOozora	-	1	AnyTime	RoundEnd	
+N03B	Nankatsu	GenzoWakabayashi	-	0	InsteadDiceRoll	Immediately	
+N03C	Nankatsu	TaroMisaki	-	0	AnyTime	Immediately	
+N04A	Nankatsu	TsubasaOozora	-	0	AnyTime	Immediately	
+N04B	Nankatsu	GenzoWakabayashi	-	0	InsteadDiceRoll	Immediately	
+N05A	Nankatsu	TsubasaOozora	-	1	AnyTime	Immediately	
+N06A	Nankatsu	TsubasaOozora	-	-2	SecondHalf	MatchEnd	
+N06B	Nankatsu	GenzoWakabayashi	-	-2	SecondHalf	MatchEnd	
+N06C	Nankatsu	TaroMisaki	-	-2	SecondHalf	MatchEnd	
+							
+M01A	Touhou	KojiroHyuga	-	3	RoundStart	RoundEnd	
+M01B	Touhou	KenWakashimazu	-	0	InsteadDiceRoll	Immediately	
+M01C	Touhou	TakeshiSawada	-	0	AnyTime	Immediately	
+M01Y	Touhou	KojiroHyuga	TakeshiSawada	0	TurnStart	TurnEnd	
+M01Z	Touhou	-	-	1	AnyTime	RoundEnd	
+M02A	Touhou	KojiroHyuga	-	2	RoundStart	RoundEnd	
+M02B	Touhou	KenWakashimazu	-	0	InsteadDiceRoll	Immediately	
+M03C	Touhou	TakeshiSawada	-	0	AnyTime	Immediately	
+M03A	Touhou	KojiroHyuga	-	1	AnyTime	RoundEnd	
+M03Z	Touhou	-	-	1	KickOff	YourNextTurn	
+M04A	Touhou	KojiroHyuga	-	0	AnyTime	Immediately	
+M04B	Touhou	KenWakashimazu	-	0	AnyTime	Immediately	
+M04Z	Touhou	-	-	1	KickOff	YourNextTurn	
+M05A	Touhou	KojiroHyuga	-	0	AnyTime	Immediately	
+M05Z	Touhou	-	-	-1	KickOff	YourNextTurn	
+M06A	Touhou	KojiroHyuga	-	1	AnyTime	Immediately	
+M06B	Touhou	KenWakashimazu	-	0	AnyTime	Immediately	
+M07A	Touhou	KojiroHyuga	-	1	AnyTime	RoundEnd	
+M07B	Touhou	KenWakashimazu	-	-2	AnyTime	Immediately	
+M08A	Touhou	KojiroHyuga	-	0	InsteadDiceRoll	Immediately	
+M09A	Touhou	KojiroHyuga	-	-2	SecondHalf	MatchEnd	
+							
+						RoundEnd	
+						TurnEnd	
+						MatchEnd	
+						YourNextTurn	
+						Immediately	
