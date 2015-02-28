@@ -18,6 +18,8 @@ public class Team
 	private CardDeck cardDeck;
 	private List<Player> _playerList;
 
+	public Team opponentTeam { get; set; }
+
 	public Team(TeamData teamData, TeamController teamController, CardDeck cardDeck)
 	{
 		_teamData = teamData;

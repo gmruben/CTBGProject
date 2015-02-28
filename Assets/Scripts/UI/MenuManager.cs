@@ -25,4 +25,10 @@ public class MenuManager
 		GameObject resource = Resources.Load<GameObject>("Prefabs/UI/Game/ActionMenu");
 		return (GameObject.Instantiate(resource) as GameObject).GetComponent<ActionMenu>();
 	}
+
+	public static CheckMenu instantiateCheckMenu()
+	{
+		GameObject resource = Resources.Load<GameObject>("Prefabs/UI/CheckMenu");
+		return (GameObject.Instantiate(resource) as GameObject).GetComponent<CheckMenu>();
+	}
 }

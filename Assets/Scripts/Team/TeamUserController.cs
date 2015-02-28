@@ -6,6 +6,7 @@ public class TeamUserController : TeamController
 {
 	private Player currentPlayer;
 
+	private MoveArrow moveArrow;
 	private ActionMenu actionMenu;
 
 	private bool isMenuActive;
@@ -67,7 +68,7 @@ public class TeamUserController : TeamController
 
 	private void onMoveButtonClick()
 	{
-		MoveArrow moveArrow = EntityManager.instantiateMoveArrow();
+		moveArrow = EntityManager.instantiateMoveArrow();
 		moveArrow.init(board, currentPlayer, team.numMoves, false);
 			
 		moveArrow.onClick += moveTo;
@@ -82,6 +83,7 @@ public class TeamUserController : TeamController
 		team.updateNumMoves(indexList.Count);
 
 		isMenuActive = false;
+		GameObject.Destroy(moveArrow.gameObject);
 	}
 
 	private void onMoveEnded()
@@ -92,7 +94,7 @@ public class TeamUserController : TeamController
 
 	private void onPassButtonClick()
 	{
-		MoveArrow moveArrow = EntityManager.instantiateMoveArrow();
+		moveArrow = EntityManager.instantiateMoveArrow();
 		moveArrow.init(board, currentPlayer, team.numMoves, true);
 		
 		moveArrow.onClick += passTo;
@@ -102,6 +104,8 @@ public class TeamUserController : TeamController
 	{
 		currentPlayer.pass(indexList);
 		currentPlayer.onPassEnded += onPassEnded;
+
+		GameObject.Destroy(moveArrow.gameObject);
 	}
 
 	private void onPassEnded()
@@ -112,7 +116,7 @@ public class TeamUserController : TeamController
 
 	private void onShootButtonClick()
 	{
-		MoveArrow moveArrow = EntityManager.instantiateMoveArrow();
+		moveArrow = EntityManager.instantiateMoveArrow();
 		moveArrow.init(board, currentPlayer, team.numMoves, true);
 		
 		moveArrow.onClick += shootTo;
@@ -120,8 +124,14 @@ public class TeamUserController : TeamController
 
 	private void shootTo(List<SquareIndex> indexList)
 	{
-		currentPlayer.shoot(indexList);
-		isMenuActive = false;
+		//Check that the target index is correct
+		if (indexList[indexList.Count - 1].x == 17)
+		{
+			currentPlayer.shoot(indexList);
+			isMenuActive = false;
+
+			GameObject.Destroy(moveArrow.gameObject);
+		}
 	}
 
 	private void onCancelButtonClick()

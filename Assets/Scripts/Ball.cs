@@ -13,8 +13,9 @@ public class Ball : MonoBehaviour
 	public Transform cachedTransform { get; private set; }
 
 	private Board board;
+	private Player owner;
 
-	private SquareIndex index;
+	public SquareIndex index { get; private set; }
 	private List<SquareIndex> toMoveSquareList;
 
 	private Action endAction;
@@ -26,8 +27,9 @@ public class Ball : MonoBehaviour
 		this.board = board;
 	}
 
-	public void pass(SquareIndex index, List<SquareIndex> toMoveSquareList)
+	public void pass(Player owner, SquareIndex index, List<SquareIndex> toMoveSquareList)
 	{
+		this.owner = owner;
 		this.index = index;
 		this.toMoveSquareList = toMoveSquareList;
 
@@ -78,7 +80,16 @@ public class Ball : MonoBehaviour
 			index = nextSquareIndex;
 			toMoveSquareList.RemoveAt(0);
 
-			StartCoroutine(updateMove());
+			//Check for opponents in the new index
+			List<Player> playerList = board.retrieveAdjacentPlayerList(index, owner.team.opponentTeam.teamData.id);
+			if (playerList.Count > 0)
+			{
+				checkForInterception(playerList[0]);
+			}
+			else
+			{
+				StartCoroutine(updateMove());
+			}
 		}
 		else
 		{
@@ -86,8 +97,9 @@ public class Ball : MonoBehaviour
 		}
 	}
 
-	public void shoot(SquareIndex index, List<SquareIndex> toMoveSquareList)
+	public void shoot(Player owner, SquareIndex index, List<SquareIndex> toMoveSquareList)
 	{
+		this.owner = owner;
 		this.index = index;
 		this.toMoveSquareList = toMoveSquareList;
 
@@ -97,6 +109,13 @@ public class Ball : MonoBehaviour
 
 	private void endShoot()
 	{
+		MessageBus.dispatchGoalScored();
 		if (onShootEnded != null) onShootEnded();
+	}
+
+	private void checkForInterception(Player player)
+	{
+		player.setInactive(true);
+		StartCoroutine(updateMove());
 	}
 }

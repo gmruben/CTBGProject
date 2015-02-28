@@ -205,6 +205,24 @@ public class Board : MonoBehaviour
 		return indexList;
 	}
 
+	public List<SquareIndex> getAdjacentTileList(SquareIndex index)
+	{
+		List<SquareIndex> tileList = new List<SquareIndex>();
+		for (int i = index.x - 1; i <= index.x + 1; i++)
+		{
+			for (int j = index.y - 1; j <= index.y + 1; j++)
+			{
+				SquareIndex newindex = new SquareIndex(i, j);
+				if (isOnBounds(newindex) && index != newindex)
+				{
+					tileList.Add(newindex);
+				}
+			}
+		}
+
+		return tileList;
+	}
+
 	public bool isOnBounds(SquareIndex index)
 	{
 		return index.x >= 0 && index.x < SIZE_X && index.y >= 0 && index.y < SIZE_Y;
@@ -214,6 +232,29 @@ public class Board : MonoBehaviour
 	{
 		if (isOnBounds(index)) return _boardData[index.x][index.y].player;
 		else return null;
+	}
+
+	/// <summary>
+	/// Retrieves all the players adjacent to an index
+	/// </summary>
+	/// <returns>The player list.</returns>
+	/// <param name="index">The index whose adjacent players we want to retrieve.</param>
+	/// <param name="teamId">The id of the team whose players we want to retrieve.</param>
+	public List<Player> retrieveAdjacentPlayerList(SquareIndex index, string teamId)
+	{
+		List<Player> playerList = new List<Player>();
+		List<SquareIndex> indexList = getAdjacentTileList(index);
+
+		for (int i = 0; i < indexList.Count; i++)
+		{
+			Player player = getPlayerOnSquare(indexList[i]);
+			if (player != null && !player.isInactive && player.team.teamData.id == teamId)
+			{
+				playerList.Add(player);
+			}
+		}
+
+		return playerList;
 	}
 
 	public bool isPlayerOnSquare(SquareIndex index)

@@ -8,10 +8,6 @@ public class MoveArrow : MonoBehaviour
     public Action<List<SquareIndex>> onClick;
     public Action onCancel;
 
-    public GameObject arrow01Prefab;
-    public GameObject arrow02Prefab;
-    public GameObject arrow03Prefab;
-
 	public GameObject moveNodePrefab;
 	public GameObject moveNodeFinalPrefab;
 
@@ -199,31 +195,7 @@ public class MoveArrow : MonoBehaviour
 	private void click()
 	{
 		isTracking = false;
-		isActive = false;
-
-		checkMenuYesButtonClicked();
-	}
-
-	private void checkMenuYesButtonClicked()
-	{
-		List<SquareIndex> indexList = new List<SquareIndex>();
-		for (int i = 1; i < nodeList.Count; i++)
-		{
-			//HACK: Es para que no busque tackle en la primera casilla, piensa sobre esto
-			if (!nodeList[i].index.Equals(startIndex))
-			{
-				indexList.Add(nodeList[i].index);
-			}
-		}
-		//HACK: Es para que no busque tackle en la primera casilla, piensa sobre esto
-		if (!nodeList[0].index.Equals(startIndex))
-		{
-			indexList.Add(nodeList[0].index);
-		}
-
-		if (onClick != null) onClick(indexList);
-
-		GameObject.Destroy(gameObject);
+		if (onClick != null) onClick(retrieveIndexList());
 	}
 
 	private void cancel()
@@ -283,26 +255,16 @@ public class MoveArrow : MonoBehaviour
 
 		return moveNode;
 	}
-}
 
-public class ArrowPiece
-{
-    public enum Type { ARROW_01, ARROW_02, ARROW_03 }
+	private List<SquareIndex> retrieveIndexList()
+	{
+		List<SquareIndex> indexList = new List<SquareIndex>();
+		for (int i = 1; i < nodeList.Count; i++)
+		{
+			indexList.Add(nodeList[i].index);
+		}
+		indexList.Add(nodeList[0].index);
 
-    public SquareIndex index;
-    public GameObject gameObject;
-
-    public ArrowPiece(SquareIndex index, GameObject gameObject)
-    {
-        this.index = index;
-        this.gameObject = gameObject;
-    }
-}
-
-public class ArrowRotation
-{
-    public static int up = 0;
-    public static int right = 90;
-    public static int down = 180;
-    public static int left = 270;
+		return indexList;
+	}
 }

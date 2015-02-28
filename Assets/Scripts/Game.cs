@@ -10,7 +10,22 @@ public class Game : MonoBehaviour
 	private Match match;
 	private Ball ball;
 
-	void Start()
+	private bool isActive = false;
+
+	void Awake()
+	{
+		if (!StringStore.isInit)
+		{
+			StringStore.onInit += onStringStoreInit;
+			StringStore.instance.init();
+		}
+		else
+		{
+			onStringStoreInit();
+		}
+	}
+
+	private void onStringStoreInit()
 	{	
 		if (!File.Exists(Application.persistentDataPath + "/Data/PlayerData.db"))
 		{
@@ -32,6 +47,7 @@ public class Game : MonoBehaviour
 	public void init()
 	{
 		board.init();
+		gameHUD.init();
 
 		match = new Match();
 
@@ -89,12 +105,18 @@ public class Game : MonoBehaviour
 		match.p1Team = p1Team;
 		match.p2Team = p2Team;
 
+		p1Team.opponentTeam = p2Team;
+		p2Team.opponentTeam = p1Team;
+
 		match.p1Team.onUpdateNumMoves += onTeamUpdateNumMoves;
 		match.p2Team.onUpdateNumMoves += onTeamUpdateNumMoves;
 
 		p1Team.playerList[p1Team.playerList.Count - 1].giveBall();
 
 		startRound();
+
+		isActive = true;
+		MessageBus.GoalScored += goalScored;
 	}
 
 	private void onTeamUpdateNumMoves()
@@ -113,7 +135,7 @@ public class Game : MonoBehaviour
 	private void startTurn()
 	{	
 		TurnOverlay turnOverlay = GUICreator.instantiateTurnOverlay();
-		turnOverlay.init(StringsStore.retrieve("Turn") + " " + match.currentTeam.teamData.name, onTurnOverlayEnded);
+		turnOverlay.init(StringStore.retrieve("Turn") + " " + match.currentTeam.teamData.name, onTurnOverlayEnded);
 	}
 	
 	private void onTurnOverlayEnded()
@@ -140,6 +162,47 @@ public class Game : MonoBehaviour
 
 	void Update()
 	{
-		match.currentTeam.update();
+		if (isActive)
+		{
+			match.currentTeam.update();
+		}
+	}
+
+	private void goalScored()
+	{	
+		TurnOverlay turnOverlay = GUICreator.instantiateTurnOverlay();
+		turnOverlay.init("GOAL", onGoalOverlayEnded);
+	}
+	
+	private void onGoalOverlayEnded()
+	{
+		match.currentTeam.startTurn();
+		gameHUD.updateNumMoves(match.p1Team, match.p2Team);
+
+		resetPlayerPositions();
+
+		board.removeBallFromSquare(ball.index);
+		match.p1Team.playerList[match.p1Team.playerList.Count - 1].giveBall();
+	}
+
+	private void resetPlayerPositions()
+	{
+		//P1 TEAM
+		for (int i = 0; i < match.p1Team.playerList.Count; i++)
+		{
+			Player player = match.p1Team.playerList[i];
+
+			player.setPosition(player.playerData.startIndex);
+			if (player.isInactive) player.setInactive(false);
+		}
+
+		//P2 TEAM
+		for (int i = 0; i < match.p2Team.playerList.Count; i++)
+		{
+			Player player = match.p2Team.playerList[i];
+
+			player.setPosition(board.inverseIndex(player.playerData.startIndex));
+			if (player.isInactive) player.setInactive(false);
+		}
 	}
 }

@@ -1,0 +1,181 @@
+Group	Identifier	Text
+Cards - Title	N01ATitle	QUIERO GANAR EL MUNDIAL
+Cards - Title	N01BTitle	FREDDIE MARSHALL
+Cards - Title	N01CTitle	PADRE DE TOM BAKER
+Cards - Title	N01DTitle	MADRE DE BRUCE HARPER
+Cards - Title	N01YTitle	LA PAREJA DE ORO
+Cards - Title	N01ZTitle	LOS HINCHAS DE PATTY
+Cards - Title	N02ATitle	IRÉ A BRASIL CON ROBERTO
+Cards - Title	N02BTitle	UNA PARADA ESPECTACULAR
+Cards - Title	N02CTitle	ANTICIPACIÓN
+Cards - Title	N02DTitle	TAMBIÉN ES MI AMIGO
+Cards - Title	N02YTitle	EL TIRO COMBINADO
+Cards - Title	N02ZTitle	VAMOS A METER OTRO GOL
+Cards - Title	N03ATitle	MICHAEL ATOM
+Cards - Title	N03BTitle	UN BLOQUEO PERFECTO
+Cards - Title	N03CTitle	UNA ENTRADA INESPERADA
+Cards - Title	N04ATitle	EL BALÓN ES MI MEJOR AMIGO
+Cards - Title	N04BTitle	EN LA LÍNEA
+Cards - Title	N05ATitle	UNA CHILENA EXTRAODINARIA
+Cards - Title	N06ATitle	OLIVER LESIONADO
+Cards - Title	N06BTitle	BENJI LESIONADO
+Cards - Title	N06CTitle	TOM LESIONADO
+		
+Cards - Comment	N01AComment	Algún día ganaré la Copa del Mundo con la selección de Japón.
+Cards - Comment	N01BComment	Eres un auténtico fenómeno. Vas a ser imbatible Benjamin.
+Cards - Comment	N01CComment	Gracias al fútbol has crecido sano y sociable Tom.
+Cards - Comment	N01DComment	¡Venga Bruce! ¡Corre! ¡He dejado el trabajo para venir a verte!
+Cards - Comment	N01YComment	¡Vamos Tom! ¡Éste es el momento!
+Cards - Comment	N01ZComment	¡Ánimo Oli! ¡Arriba NewTeam!
+Cards - Comment	N02AComment	Oliver, si ganas el campeonato, prometo llevarte a Brasil.
+Cards - Comment	N02BComment	¡Fantástica estirada de Benji 'Paralotodo' Price!
+Cards - Comment	N02CComment	¡No me arrebataréis el balón!
+Cards - Comment	N02DComment	¡Harper se interpone en la trayectoria del balón!
+Cards - Comment	N02YComment	¡Increíble disparo a puerta!
+Cards - Comment	N02ZComment	¡Gooool del capitán del NewTeam!
+Cards - Comment	N03AComment	Me alegra poder venir a verte Oliver.
+Cards - Comment	N03BComment	¡Detiene quitando prácticamente en el aire el balón del pie!
+Cards - Comment	N03CComment	¡Baker aparece de repente y trata de hacerse con el esférico!
+Cards - Comment	N04AComment	¡Atom detiene el balón con la cara!
+Cards - Comment	N04BComment	¡Price ha conseguido que el balón se mantenga fuera de la portería!
+Cards - Comment	N05AComment	¡Atom se eleva y remata con una magnífica chilena!
+Cards - Comment	N06AComment	El capitán del Newteam se lamenta en el suelo.
+Cards - Comment	N06BComment	Price ya no aguanta el esfuerzo de este durísimo encuentro.
+Cards - Comment	N06CComment	Parece qeu Baker se ha hecho daño.
+		
+Cards - Action	N01AAction	Motivación.
+Cards - Action	N01BAction	Motivación.
+Cards - Action	N01CAction	Motivación.
+Cards - Action	N01DAction	Motivación.
+Cards - Action	N01YAction	Avanzan hasta 5 cuadros cada uno.
+Cards - Action	N01ZAction	Motivación.
+Cards - Action	N02AAction	Motivación.
+Cards - Action	N02BAction	Jugar ante un tiro a puerta.
+Cards - Action	N02CAction	Se deshace del balón antes de recibir una entrada.
+Cards - Action	N02DAction	Avanza hasta 5 cuadros y empata a puntos con el balón.
+Cards - Action	N02YAction	Jugar cuando están adyacentes. Suman sus puntos.
+Cards - Action	N02ZAction	Motivación. Jugar tras un gol de Oliver Atom.
+Cards - Action	N03AAction	Motivación.
+Cards - Action	N03BAction	Jugar ante un tiro a puerta desde dentro del área.
+Cards - Action	N03CAction	Avanza hasta 5 cuadros.
+Cards - Action	N04AAction	Avanza hasta 5 cuadros y empata a puntos con el balón.
+Cards - Action	N04BAction	Jugar ante un tiro a puerta desde fuera del área.
+Cards - Action	N05AAction	Jugar dentro del área contraria.
+Cards - Action	N06AAction	Jugar tras una acción de Oliver Atom.
+Cards - Action	N06BAction	Jugar tras una acción de Benji Price.
+Cards - Action	N06CAction	Jugar tras una acción de Tom Baker.
+		
+		
+Cards - Title	M01ATitle	VOY A SER EL NÚMERO 1
+Cards - Title	M01BTitle	ESTIRADA FELINA
+Cards - Title	M01CTitle	CONTROL Y PASE
+Cards - Title	M01YTitle	EL TANDEM PERFECTO
+Cards - Title	M01ZTitle	JEFE TURNER
+Cards - Title	M02ATitle	BECA DEL TOHO
+Cards - Title	M02BTitle	DEPEJE ACCROBÁTICO
+Cards - Title	M03CTitle	MELOW A LA CARRERA
+Cards - Title	M03ATitle	FAMILIA Y AMIGOS
+Cards - Title	M03ZTitle	EL GESTO DE LA VICTORIA
+Cards - Title	M04ATitle	LENDERS INTERCEPTA
+Cards - Title	M04BTitle	IMPULSO DESDE EL POSTE
+Cards - Title	M04ZTitle	LUCHAREMOS HASTA EL FINAL
+Cards - Title	M05ATitle	EN EL ÚLTIMO MOMENTO
+Cards - Title	M05ZTitle	FRUSTRACIÓN
+Cards - Title	M06ATitle	UNA ENTRADA DURÍSIMA
+Cards - Title	M06BTitle	UN RÁPIDO CONTRAATAQUE
+Cards - Title	M07ATitle	EL DESPERTAR DEL TIGRE
+Cards - Title	M07BTitle	EFECTO ENDIABLADO
+Cards - Title	M08ATitle	TREMENDÍSIMO CAÑONAZO
+Cards - Title	M09ATitle	LENDERS AGOTADO
+		
+Cards - Comment	M01AComment	Papá, cumpliré mi promesa y me convertiré en jugador profesional.
+Cards - Comment	M01BComment	¡Warner evita que el esférico perfore las mallas!
+Cards - Comment	M01CComment	¡Melow intercepta el balón y lo cede a un compañero!
+Cards - Comment	M01YComment	"¡Vamos Danny! ¡Es nuestro turno!
+Cards - Comment	M01ZComment	Sois los mejores y tenéis que demostrarlo.
+Cards - Comment	M02AComment	Si ganas te concederemos una beca para el instituto Toho.
+Cards - Comment	M02BComment	¡Fantástico despeje del portero del Muppet!
+Cards - Comment	M03CComment	Melow se adelanta con gran decisión.
+Cards - Comment	M03AComment	¡Vamos Mark! ¡Hemos venido para verte ganar!
+Cards - Comment	M03ZComment	¡Juro que el Muppet ganará este partido a toda costa!
+Cards - Comment	M04AComment	¡El capitán del Muppet detiene el esférico con el pecho!
+Cards - Comment	M04BComment	¡Warner se lanza hacia el esférico!
+Cards - Comment	M04ZComment	¡Para ganar el partido no hay que rendirse jamás!
+Cards - Comment	M05AComment	¡Espectacular despeje del capitán del Muppet!
+Cards - Comment	M05ZComment	¡Gooool! ¡El tanto es válido y sube al marcador!
+Cards - Comment	M06AComment	¡A ver si consigues esquivar esta entrada!
+Cards - Comment	M06BComment	¡Warner pasa el balón con gran precisión!
+Cards - Comment	M07AComment	¡Mark Lenders se lanza al ataque!
+Cards - Comment	M07BComment	¡El esférico se ha vuelto loco!
+Cards - Comment	M08AComment	¡El disparo de Lenders es fortísimo!
+Cards - Comment	M09AComment	No es nada Danny. Sólo necesito descansar un poco.
+		
+Cards - Action	M01AAction	Motivación.
+Cards - Action	M01BAction	Jugar ante un tiro a puerta.
+Cards - Action	M01CAction	Avanza hasta 5 cuadros, intercepta y pasa el balón.
+Cards - Action	M01YAction	Avanzan hasta 5 cuadros cada uno.
+Cards - Action	M01ZAction	Motivación.
+Cards - Action	M02AAction	Motivación.
+Cards - Action	M02BAction	Empata a puntos con el balón.
+Cards - Action	M03CAction	Avanza hasta 5 cuadros.
+Cards - Action	M03AAction	Motivación.
+Cards - Action	M03ZAction	Motivación. Jugar tras un gol de Mark Lenders.
+Cards - Action	M04AAction	Avanza hasta 5 cuadros y se hace con el balón.
+Cards - Action	M04BAction	Jugar ante un tiro a puerta. Avanza hasta 5 cuadros.
+Cards - Action	M04ZAction	Motivación. Jugar tras encajar un gol del rival.
+Cards - Action	M05AAction	Avanza hasta 5 cuadros y empata a puntos con el balón.
+Cards - Action	M05ZAction	Jugar tras meter un gol al Muppet F.C.
+Cards - Action	M06AAction	Avanza hasta 5 cuadros.
+Cards - Action	M06BAction	El pase no puede ser interceptado por ningún oponente.
+Cards - Action	M07AAction	Avanza hasta 5 cuadros.
+Cards - Action	M07BAction	Jugar en un tiro a puerta antes de lanzar el dado
+Cards - Action	M08AAction	Jugar fuera del área. Duplica sus puntos.
+Cards - Action	M09AAction	Jugar tras una acción de Mark Lenders.
+		
+		
+		
+Cards - In Action	KickOff	EN EL SAQUE DE MEDIO CAMPO
+Cards - In Action	SecondHalf	EN EL 2T
+Cards - In Action	AnyTime	EN CUALQUIER MOMENTO
+Cards - In Action	RoundStart	AL INICIO DE LA RONDA
+Cards - In Action	TurnStart	AL INICIO DEL TURNO
+Cards - In Action	InsteadDiceRoll	EN LUGAR DE LANZAR EL DADO
+		
+Cards - Out Action	RoundEnd	AL FINAL DE LA RONDA
+Cards - Out Action	TurnEnd	AL FINAL DEL TURNO
+Cards - Out Action	YourNextTurn	EN TU PRÓXIMO TURNO
+Cards - Out Action	MatchEnd	AL FINAL DEL PARTIDO
+Cards - Out Action	NextTurn	EN TU PRÓXIMO TURNO
+Cards - Out Action	Immediately	DE INMEDIATO
+		
+Game - Menus	Turn	TURNO DE
+		
+Names - Player	GenzoWakabayashi	BENJI PRICE
+Names - Player	TakeshiKishida	CHARLIE CUSTER
+Names - Player	MasaoNakayama	JILL TAYLOR
+Names - Player	HanjiUrabe	JACK MORRIS
+Names - Player	ShingoTakasugi	BOB DENVER
+Names - Player	HajimeTaki	TED CARTER
+Names - Player	MamoruIzawa	PAUL DIAMOND
+Names - Player	TeppeiKisugi	JOHNNY MASON
+Names - Player	TsubasaOozora	OLIVER ATOM
+Names - Player	TaroMisaki	TOM BAKER
+Names - Player	RyoIshizaki	BRUCE HARPER
+		
+Names - Player	ToshiyukiTakagi	BAXTER FOSTER
+Names - Player	KeijiKawagoe	STEVE O'NEILL
+Names - Player	HiroshiIshii	NICK STAR
+Names - Player	MotoharuNagano	FELIX GREEN
+Names - Player	KazushigeEmoto	ARNOLD JONES
+Names - Player	HiromochiHori	OSCAR REEVES
+Names - Player	ShinichiSakamoto	CONRAD AYLE
+Names - Player	KojiroHyuga	MARK LENDERS
+Names - Player	NoburuSawaki	KEITH COLEMAN
+Names - Player	TakeshiSawada	DANNY MELOW
+Names - Player	KenWakashimazu	ED WARNER
+		
+Names - Team	Nankatsu	NEWTEAM S.C.
+Names - Team	Touhou	MUPPET F.C.
+		
+Game - UI	yes	SÍ
+Game - UI	no	NO

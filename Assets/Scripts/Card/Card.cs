@@ -22,13 +22,13 @@ public class Card : MonoBehaviour
 
 		if (cardData.player1Id == "-")
 		{
-			if (cardData.player2Id == "-") playerName = StringsStore.retrieve(cardData.teamId);
-			else StringsStore.retrieve(cardData.player2Id);
+			if (cardData.player2Id == "-") playerName = StringStore.retrieve(cardData.teamId);
+			else StringStore.retrieve(cardData.player2Id);
 		}
 		else 
 		{
-			if (cardData.player2Id == "-") playerName = StringsStore.retrieve(cardData.player1Id);
-			else playerName = StringsStore.retrieve(cardData.player2Id) + "\n" + StringsStore.retrieve(cardData.player2Id);
+			if (cardData.player2Id == "-") playerName = StringStore.retrieve(cardData.player1Id);
+			else playerName = StringStore.retrieve(cardData.player2Id) + "\n" + StringStore.retrieve(cardData.player2Id);
 		}
 
 		title.text = cardData.title;
@@ -36,8 +36,8 @@ public class Card : MonoBehaviour
 		player.text = playerName;
 		level.text = cardData.value.ToString();
 		action.text = cardData.action;
-		inAction.text = StringsStore.retrieve(cardData.inAction);
-		outAction.text = StringsStore.retrieve(cardData.outAction);
+		inAction.text = StringStore.retrieve(cardData.inAction);
+		outAction.text = StringStore.retrieve(cardData.outAction);
 
 		//HACK: Haz esto sin hardcodearlo
 		if (cardData.teamId == "Nankatsu")

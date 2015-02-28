@@ -19,9 +19,9 @@ public class CardStore
 			cardData.id = data.Rows[i]["id"].ToString();
 			cardData.teamId = data.Rows[i]["teamId"].ToString();
 
-			cardData.title = StringsStore.retrieve(cardData.id + "Title");
-			cardData.comment = StringsStore.retrieve(cardData.id + "Comment");
-			cardData.action = StringsStore.retrieve(cardData.id + "Action");
+			cardData.title = StringStore.retrieve(cardData.id + "Title");
+			cardData.comment = StringStore.retrieve(cardData.id + "Comment");
+			cardData.action = StringStore.retrieve(cardData.id + "Action");
 
 			cardData.player1Id = data.Rows[i]["player1Id"].ToString();
 			cardData.player2Id = data.Rows[i]["player2Id"].ToString();

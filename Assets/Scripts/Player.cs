@@ -29,6 +29,8 @@ public class Player : MonoBehaviour
 	private bool _hasTheBall = false;
 	private bool _isInactive = false;
 
+	private Animator animator;
+
 	public void init(Team team, PlayerData playerData, Board board, Ball ball)
 	{
 		this.team = team;
@@ -41,6 +43,8 @@ public class Player : MonoBehaviour
 		//Set token texture
 		Texture texture = Resources.Load<Texture>("Textures/Tokens/" + team.teamData.id + "/Token_" + playerData.id);
 		token.renderer.material.SetTexture("_MainTex", texture);
+
+		animator = GetComponent<Animator>();
 	}
 
 	public void setPosition(SquareIndex index)
@@ -64,7 +68,7 @@ public class Player : MonoBehaviour
 		loseBall();
 
 		ball.onPassEnded += passEnded;
-		ball.pass(index, toMoveSquareList);
+		ball.pass(this, index, toMoveSquareList);
 	}
 
 	private void passEnded()
@@ -78,7 +82,7 @@ public class Player : MonoBehaviour
 		loseBall();
 		
 		ball.onShootEnded += shootEnded;
-		ball.shoot(index, toMoveSquareList);
+		ball.shoot(this, index, toMoveSquareList);
 	}
 	
 	private void shootEnded()
@@ -113,7 +117,6 @@ public class Player : MonoBehaviour
 			
 			_index = nextSquareIndex;
 			toMoveSquareList.RemoveAt(0);
-			
 
 			StartCoroutine(updateMove());
 		}
@@ -146,12 +149,12 @@ public class Player : MonoBehaviour
 		ball.cachedTransform.parent = null;
 	}
 
-	public void setInactive()
+	public void setInactive(bool isInactive)
 	{
-		_isInactive = true;
+		_isInactive = isInactive;
 
-		token.transform.localRotation = Quaternion.Euler(90, 0, 0);
-		token.transform.localPosition = new Vector3(0, 0.035f, 0);
+		if (isInactive) animator.Play("Flip");
+		else animator.Play("FlipBack");
 	}
 
 	public PlayerData playerData
