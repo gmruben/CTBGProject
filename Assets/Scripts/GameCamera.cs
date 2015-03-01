@@ -5,8 +5,8 @@ public class GameCamera : MonoBehaviour
 {
 	private const float cameraSpeed = 10;
 
-	private const int minOrthoSize = 2;
-	private const int maxOrthoSize = 8;
+	private const int minPosY = 7;
+	private const int maxPosY = 14;
 
 	private static Camera _camera;
 	private Transform cachedTransform;
@@ -32,11 +32,11 @@ public class GameCamera : MonoBehaviour
 
 		if (Input.GetAxis("Mouse ScrollWheel") < 0)
 		{
-			if (_camera.orthographicSize < maxOrthoSize) _camera.orthographicSize++;
+			if (_camera.transform.position.y < maxPosY) _camera.transform.position += Vector3.up;
 		}
 		if (Input.GetAxis("Mouse ScrollWheel") > 0)
 		{
-			if (_camera.orthographicSize > minOrthoSize) _camera.orthographicSize--;
+			if (_camera.transform.position.y > minPosY) _camera.transform.position -= Vector3.up;
 		}
 
 		//updateMouse();

@@ -7,7 +7,7 @@ public class Team
 {
 	public event Action onUpdateNumMoves;
 
-	private bool _isP1Team;
+	public bool isP1Team { get; set; }
 	private TeamData _teamData;
 
 	private int modifier;			//Stores all the modifier applied by cards to the team
@@ -19,6 +19,8 @@ public class Team
 	private List<Player> _playerList;
 
 	public Team opponentTeam { get; set; }
+
+	public Player gk { get; private set; }
 
 	public Team(TeamData teamData, TeamController teamController, CardDeck cardDeck)
 	{
@@ -35,6 +37,12 @@ public class Team
 	public void addPlayer(Player player)
 	{
 		_playerList.Add(player);
+
+		//Check if it is the GK
+		if (player.playerData.position == PlayerPositionIds.GK)
+		{
+			gk = player;
+		}
 	}
 
 	private void createDeck()
@@ -73,11 +81,6 @@ public class Team
 	}
 
 	#region PROPERTIES
-
-	public bool isP1Team
-	{
-		get { return _isP1Team; }
-	}
 
 	public TeamData teamData
 	{

@@ -4,12 +4,12 @@ using System.Collections;
 
 public class MessageBus
 {
-    public static event Action UserMoveEnded;
+    public static event Action UserTurnEnded;
 	public static event Action GoalScored;
 
-    public static void dispatchUserMoveEnded()
+    public static void dispatchUserTurnEnded()
     {
-		if (UserMoveEnded != null) UserMoveEnded();
+		if (UserTurnEnded != null) UserTurnEnded();
     }
 
 	public static void dispatchGoalScored()

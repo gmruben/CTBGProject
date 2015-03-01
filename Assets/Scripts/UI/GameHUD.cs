@@ -23,8 +23,11 @@ public class GameHUD : UIMenu
 		
 	}
 
-	public void updateNumMoves(Team p1team, Team p2Team)
+	public void updateNumMoves(bool isP1TeamTurn, Team p1team, Team p2Team)
 	{
+		p1EndTurnButton.setActive(isP1TeamTurn);
+		p2EndTurnButton.setActive(!isP1TeamTurn);
+
 		p1NumMoves.text = "MOVIMIENTOS: " + p1team.numMoves;
 		p2NumMoves.text = "MOVIMIENTOS: " + p2Team.numMoves;
 	}
@@ -44,6 +47,7 @@ public class GameHUD : UIMenu
 		checkMenu.noButton.onClick -= onCheckMenuNoButtonClick;
 
 		GameObject.Destroy(checkMenu.gameObject);
+		MessageBus.dispatchUserTurnEnded();
 	}
 
 	private void onCheckMenuNoButtonClick()

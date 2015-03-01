@@ -45,9 +45,9 @@ public class EntityManager
 		return (GameObject.Instantiate(playerPrefab) as GameObject).GetComponent<MoveArrow>();
 	}
 
-	public static PassArrow instantiatePassArrow()
+	public static TackleArrow instantiateTackleArrow()
 	{
-		GameObject playerPrefab = Resources.Load<GameObject>("Prefabs/Game/PassArrow");
-		return (GameObject.Instantiate(playerPrefab) as GameObject).GetComponent<PassArrow>();
+		GameObject playerPrefab = Resources.Load<GameObject>("Prefabs/Game/TackleArrow");
+		return (GameObject.Instantiate(playerPrefab) as GameObject).GetComponent<TackleArrow>();
 	}
 }

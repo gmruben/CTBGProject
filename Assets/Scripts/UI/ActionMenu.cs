@@ -10,6 +10,7 @@ public class ActionMenu : UIMenu
 	public GameObject actionButtons;
 
 	public UIButton moveButton;
+	public UIButton tackleButton;
 	public UIButton passButton;
 	public UIButton shootButton;
 	public UIButton menuCancelButton;
@@ -26,6 +27,7 @@ public class ActionMenu : UIMenu
 		shootButton.setActive(player.hasTheBall);
 
 		moveButton.onClick += onAction;
+		tackleButton.onClick += onAction;
 		passButton.onClick += onAction;
 		shootButton.onClick += onAction;
 	}

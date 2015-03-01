@@ -7,6 +7,8 @@ public class TeamUserController : TeamController
 	private Player currentPlayer;
 
 	private MoveArrow moveArrow;
+	private TackleArrow tackleArrow;
+
 	private ActionMenu actionMenu;
 
 	private bool isMenuActive;
@@ -53,6 +55,7 @@ public class TeamUserController : TeamController
 	private void addActionMenuListeners()
 	{
 		actionMenu.moveButton.onClick += onMoveButtonClick;
+		actionMenu.tackleButton.onClick += onTackleButtonClick;
 		actionMenu.passButton.onClick += onPassButtonClick;
 		actionMenu.shootButton.onClick += onShootButtonClick;
 		actionMenu.menuCancelButton.onClick += onCancelButtonClick;
@@ -69,7 +72,7 @@ public class TeamUserController : TeamController
 	private void onMoveButtonClick()
 	{
 		moveArrow = EntityManager.instantiateMoveArrow();
-		moveArrow.init(board, currentPlayer, team.numMoves, false);
+		moveArrow.init(board, currentPlayer, team.numMoves, team.numMoves, false, true);
 			
 		moveArrow.onClick += moveTo;
 		//moveArrow.onCancel += cancelMove;
@@ -77,8 +80,8 @@ public class TeamUserController : TeamController
 
 	private void moveTo(List<SquareIndex> indexList)
 	{
-		currentPlayer.move(indexList);
 		currentPlayer.onMoveEnded += onMoveEnded;
+		currentPlayer.move(indexList);
 
 		team.updateNumMoves(indexList.Count);
 
@@ -92,18 +95,41 @@ public class TeamUserController : TeamController
 		isMenuActive = false;
 	}
 
+	private void onTackleButtonClick()
+	{
+		tackleArrow = EntityManager.instantiateTackleArrow();
+		tackleArrow.init(board, currentPlayer);
+		
+		tackleArrow.onClick += tackleTo;
+	}
+
+	private void tackleTo(Player opponent)
+	{
+		currentPlayer.onTackleEnded += onTackleEnded;
+		currentPlayer.tackle(opponent);
+		
+		isMenuActive = false;
+		GameObject.Destroy(tackleArrow.gameObject);
+	}
+
+	private void onTackleEnded()
+	{
+		currentPlayer.onTackleEnded -= onTackleEnded;
+		isMenuActive = false;
+	}
+
 	private void onPassButtonClick()
 	{
 		moveArrow = EntityManager.instantiateMoveArrow();
-		moveArrow.init(board, currentPlayer, team.numMoves, true);
+		moveArrow.init(board, currentPlayer, currentPlayer.playerData.level, 1, true, false);
 		
 		moveArrow.onClick += passTo;
 	}
 
 	private void passTo(List<SquareIndex> indexList)
 	{
-		currentPlayer.pass(indexList);
 		currentPlayer.onPassEnded += onPassEnded;
+		currentPlayer.pass(indexList);
 
 		GameObject.Destroy(moveArrow.gameObject);
 	}
@@ -117,7 +143,7 @@ public class TeamUserController : TeamController
 	private void onShootButtonClick()
 	{
 		moveArrow = EntityManager.instantiateMoveArrow();
-		moveArrow.init(board, currentPlayer, team.numMoves, true);
+		moveArrow.init(board, currentPlayer, currentPlayer.playerData.level, 1, true, false);
 		
 		moveArrow.onClick += shootTo;
 	}

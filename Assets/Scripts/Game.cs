@@ -58,9 +58,9 @@ public class Game : MonoBehaviour
 		TeamData p2TeamData = new TeamData();
 
 		p1TeamData.id = "Nankatsu";
-		p1TeamData.name =  "NANKATSU";
+		p1TeamData.name =  "NEWTEAM S.C.";
 		p2TeamData.id = "Touhou";
-		p2TeamData.name =  "TOUHOU";
+		p2TeamData.name =  "MUPPET F.C.";
 
 		TeamController p1TeamController = new TeamUserController(board);
 		TeamController p2TeamController = new TeamUserController(board);
@@ -105,6 +105,9 @@ public class Game : MonoBehaviour
 		match.p1Team = p1Team;
 		match.p2Team = p2Team;
 
+		match.p1Team.isP1Team = true;
+		match.p2Team.isP1Team = false;
+
 		p1Team.opponentTeam = p2Team;
 		p2Team.opponentTeam = p1Team;
 
@@ -116,12 +119,14 @@ public class Game : MonoBehaviour
 		startRound();
 
 		isActive = true;
+
+		MessageBus.UserTurnEnded += userTurnEnded;
 		MessageBus.GoalScored += goalScored;
 	}
 
 	private void onTeamUpdateNumMoves()
 	{
-		gameHUD.updateNumMoves(match.p1Team, match.p2Team);
+		gameHUD.updateNumMoves(match.currentTeam.isP1Team, match.p1Team, match.p2Team);
 	}
 
 	private void startRound()
@@ -140,24 +145,17 @@ public class Game : MonoBehaviour
 	
 	private void onTurnOverlayEnded()
 	{
-		//MessageBus.UserTurnEnded += userTurnEnded;
-
 		match.currentTeam.startTurn();
-		gameHUD.updateNumMoves(match.p1Team, match.p2Team);
+		gameHUD.updateNumMoves(match.currentTeam.isP1Team, match.p1Team, match.p2Team);
 	}
 	
 	private void userTurnEnded()
 	{
-		//MessageBus.UserTurnEnded -= userTurnEnded;
-		endTurn();
-	}
-	
-	private void endTurn()
-	{
 		match.currentTeam.endTurn();
-		match.currentTeam = (match.currentTeam.teamData.id == match.p1Team.teamData.id) ? match.p2Team : match.p1Team;
+		match.currentTeam = match.currentTeam.opponentTeam;
 
-		startTurn();
+		TurnOverlay turnOverlay = GUICreator.instantiateTurnOverlay();
+		turnOverlay.init(StringStore.retrieve("Turn") + " " + match.currentTeam.teamData.name, onTurnOverlayEnded);
 	}
 
 	void Update()
@@ -177,7 +175,7 @@ public class Game : MonoBehaviour
 	private void onGoalOverlayEnded()
 	{
 		match.currentTeam.startTurn();
-		gameHUD.updateNumMoves(match.p1Team, match.p2Team);
+		gameHUD.updateNumMoves(match.currentTeam.isP1Team, match.p1Team, match.p2Team);
 
 		resetPlayerPositions();
 

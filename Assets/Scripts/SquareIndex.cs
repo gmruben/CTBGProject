@@ -46,12 +46,21 @@ public class SquareIndex
 		return !(a == b);
 	}
 	
-	//HACK: UFFFF, mira todo esto...
+	public static SquareIndex operator +(SquareIndex index1, SquareIndex index2)
+	{
+		return new SquareIndex(index1.x + index2.x, index1.y + index2.y);
+	}
+
 	public static SquareIndex operator -(SquareIndex index1, SquareIndex index2)
 	{
 		return new SquareIndex(index1.x - index2.x, index1.y - index2.y);
 	}
-	
+
+	public static SquareIndex operator *(SquareIndex index, int value)
+	{
+		return new SquareIndex(index.x * value, index.y * value);
+	}
+
 	public float magnitude
 	{
 		get { return Mathf.Sqrt(x * x + y * y); }

@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
 	private const float moveSpeed = 5.0f;
 
 	public event Action onMoveEnded;
+	public event Action onTackleEnded;
 	public event Action onPassEnded;
 	public event Action onShootEnded;
 
@@ -30,6 +31,9 @@ public class Player : MonoBehaviour
 	private bool _isInactive = false;
 
 	private Animator animator;
+
+	//The action for when a move finishes
+	private Action endAction;
 
 	public void init(Team team, PlayerData playerData, Board board, Ball ball)
 	{
@@ -59,7 +63,8 @@ public class Player : MonoBehaviour
 	{
 		this.toMoveSquareList = toMoveSquareList;
 		board.removePlayerFromSquare(index);
-		
+
+		endAction = endMove;
 		StartCoroutine(updateMove());
 	}
 
@@ -116,21 +121,31 @@ public class Player : MonoBehaviour
 			cachedTransform.position = board.squareIndexToWorld(nextSquareIndex);
 			
 			_index = nextSquareIndex;
+			board.updatePlayerPosition(_index, this);
+
 			toMoveSquareList.RemoveAt(0);
 
-			StartCoroutine(updateMove());
+			//If the player has the ball, check for tackles
+			if (hasTheBall)
+			{
+				List<Player> playerList = board.retrieveAdjacentPlayerList(_index, team.opponentTeam.teamData.id);
+				if (playerList.Count > 0)
+				{
+					checkForTackle(playerList[0]);
+				}
+				else
+				{
+					StartCoroutine(updateMove());
+				}
+			}
+			else
+			{
+				StartCoroutine(updateMove());
+			}
 		}
 		else
 		{
-			//Check if the ball is in the end square
-			if (board.isBallOnSquare(index))
-			{
-				board.removeBallFromSquare(index);
-				giveBall();
-			}
-
-			board.updatePlayerPosition(index, this);
-			if (onMoveEnded != null) onMoveEnded();
+			endAction();
 		}
 	}
 
@@ -147,6 +162,122 @@ public class Player : MonoBehaviour
 		_hasTheBall = false;
 		
 		ball.cachedTransform.parent = null;
+	}
+
+	public void intercept(SquareIndex index, bool success)
+	{
+		if (success)
+		{
+			toMoveSquareList = new List<SquareIndex>();
+			toMoveSquareList.Add(index);
+
+			board.removePlayerFromSquare(index);
+			
+			endAction = endIntercept;
+			StartCoroutine(updateMove());
+		}
+		else
+		{
+			setInactive(true);
+		}
+	}
+
+	private void endMove()
+	{
+		//Check if the ball is in the end square
+		if (board.isBallOnSquare(index))
+		{
+			board.removeBallFromSquare(index);
+			giveBall();
+		}
+
+		if (onMoveEnded != null) onMoveEnded();
+	}
+
+	private void endIntercept()
+	{
+		giveBall();
+		board.updatePlayerPosition(index, this);
+	}
+
+	public void tackle(Player opponent)
+	{
+		//If player's level is greater or equal to ball's power, the player intercepts the ball
+		if (opponent.playerData.level < playerData.level)
+		{
+			giveBall();
+
+			opponent.loseBall();
+			opponent.setInactive(true);
+		}
+		else if (opponent.playerData.level > playerData.level)
+		{
+			setInactive(true);
+		}
+		else
+		{
+			setInactive(true);
+
+			opponent.loseBall();
+			opponent.setInactive(true);
+
+			ball.clear (opponent.index);
+		}
+
+		if (onTackleEnded != null) onTackleEnded();
+	}
+
+	private void checkForTackle(Player opponent)
+	{
+		//If player's level is greater or equal to ball's power, the player intercepts the ball
+		if (opponent.playerData.level > playerData.level)
+		{
+			loseBall();
+			setInactive(true);
+
+			opponent.giveBall();
+
+			MessageBus.dispatchUserTurnEnded();
+			if (onMoveEnded != null) onMoveEnded();
+		}
+		else if (opponent.playerData.level < playerData.level)
+		{
+			opponent.setInactive(true);
+
+			StartCoroutine(updateMove());
+		}
+		else
+		{
+			loseBall();
+			setInactive(true);
+
+			opponent.setInactive(true);
+			
+			ball.clear (index);
+		}
+	}
+
+	public void save(SquareIndex targetIndex)
+	{
+		if (index != targetIndex)
+		{
+			toMoveSquareList = PathFinder.findPath(index, targetIndex, board, false, true, 10);
+		}
+
+		endAction = endSave;
+		StartCoroutine(updateMove());
+	}
+
+	private void endSave()
+	{
+		if (ball.power < _playerData.level)
+		{
+			giveBall();
+		}
+		else
+		{
+			MessageBus.dispatchGoalScored();
+		}
 	}
 
 	public void setInactive(bool isInactive)

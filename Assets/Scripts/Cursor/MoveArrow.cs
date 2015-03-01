@@ -15,6 +15,7 @@ public class MoveArrow : MonoBehaviour
 	public GameObject moveLinkDiagonalPrefab;
 
     private List<MoveNode> nodeList;
+	private List<GameObject> linkList;
 
     private Board board;
 	private Player player;
@@ -26,7 +27,9 @@ public class MoveArrow : MonoBehaviour
     protected SquareIndex currentIndex;
 
 	private int numMoves;
+	private int numDiagonals;
 	private bool canUseEmptySquares;
+	private bool canChangeDirection;
 
 	private bool hasMoved = false;
 
@@ -38,17 +41,20 @@ public class MoveArrow : MonoBehaviour
         }
     }
 
-    public void init(Board board, Player player, int numMoves, bool canUseEmptySquares)
+	public void init(Board board, Player player, int numMoves, int numDiagonals, bool canUseEmptySquares, bool canChangeDirection)
     {
         this.board = board;
 		this.player = player;
 
 		this.numMoves = numMoves;
+		this.numDiagonals = numDiagonals;
 		this.canUseEmptySquares = canUseEmptySquares;
+		this.canChangeDirection = canChangeDirection;
 
         isActive = true;
 
         nodeList = new List<MoveNode>();
+		linkList = new List<GameObject>();
 
 		startIndex = player.index;
 		lastIndex = startIndex;
@@ -140,8 +146,17 @@ public class MoveArrow : MonoBehaviour
 					//HACK: Have to think about this at some point
                     if (!index.Equals(headIndex) && !index.Equals(startIndex))
                     {
-						hasMoved = true;
-						moveTo(index);
+						//Check if we have enough moves left
+						if (nodeList.Count < numMoves)
+						{
+							hasMoved = true;
+
+							//Check if we have changed direction
+							if (canChangeDirection || (!canChangeDirection && !isDirectionChange(index)))
+							{
+								moveTo(index);
+							}
+						}
                     }
                 }
             }
@@ -181,10 +196,14 @@ public class MoveArrow : MonoBehaviour
 					else
 					{
 						removeList();
-						List<SquareIndex> path = PathFinder.findPath(startIndex, index, board, canUseEmptySquares);
+						List<SquareIndex> path = PathFinder.findPath(startIndex, index, board, canUseEmptySquares, canChangeDirection, numDiagonals);
 						for (int i = 0; i < path.Count; i++)
 						{
-							moveTo(path[i]);
+							//Check if we have enough moves left
+							if (nodeList.Count < numMoves)
+							{
+								moveTo(path[i]);
+							}
 						}
 					}
 				}
@@ -200,7 +219,6 @@ public class MoveArrow : MonoBehaviour
 
 	private void cancel()
 	{
-		board.hideRadius();
 		if (onCancel != null) onCancel();
 	}
 
@@ -230,6 +248,7 @@ public class MoveArrow : MonoBehaviour
 	        currentIndex = index;
 	    }
 
+		createNodeLinks();
 		calculateNumMoves();
     }
 
@@ -245,6 +264,13 @@ public class MoveArrow : MonoBehaviour
 		nodeList[0].setValue(numMoves - nodeList.Count);
 	}
 
+	/// <summary>
+	/// Instantiates a new move node
+	/// </summary>
+	/// <returns>The move node.</returns>
+	/// <param name="prefab">The prefab for the node (there could be different nodes).</param>
+	/// <param name="index">The index for the node.</param>
+	/// <param name="numMoves">Number of moves left to show on the node.</param>
 	private MoveNode instantiateMoveNode(GameObject prefab, SquareIndex index, int numMoves)
 	{
 		MoveNode moveNode = (GameObject.Instantiate(prefab) as GameObject).GetComponent<MoveNode>();
@@ -254,6 +280,16 @@ public class MoveArrow : MonoBehaviour
 		moveNode.transform.localPosition = board.squareIndexToWorld(index);
 
 		return moveNode;
+	}
+
+	private GameObject instantiateNodeLink(GameObject prefab, Vector3 position)
+	{
+		GameObject nodeLink = GameObject.Instantiate(prefab) as GameObject;
+		
+		nodeLink.transform.parent = transform;
+		nodeLink.transform.position = position;
+		
+		return nodeLink;
 	}
 
 	private List<SquareIndex> retrieveIndexList()
@@ -266,5 +302,70 @@ public class MoveArrow : MonoBehaviour
 		indexList.Add(nodeList[0].index);
 
 		return indexList;
+	}
+
+	private void createNodeLinks()
+	{
+		clearNodeLinks();
+
+		List<SquareIndex> indexList = retrieveIndexList();
+		for (int i = 1; i < indexList.Count; i++)
+		{
+			SquareIndex index1 = indexList[i - 1];
+			SquareIndex index2 = indexList[i];
+
+			//Don't do diagonals for now
+			if (!isDiagonal(index1, index2))
+			{
+				Vector3 pos1 = board.squareIndexToWorld(index1);
+				Vector3 pos2 = board.squareIndexToWorld(index2);
+
+				Vector3 position = pos1 + ((pos2 - pos1) * 0.5f);
+				linkList.Add(instantiateNodeLink(moveLinkPrefab, position));
+			}
+		}	
+	}
+
+	private void clearNodeLinks()
+	{
+		for (int i = 0; i < linkList.Count; i++)
+		{
+			GameObject.Destroy(linkList[i]);
+		}
+		linkList.Clear();
+	}
+
+	private bool isHorizontal(SquareIndex index1, SquareIndex index2)
+	{
+		return index1.x != index2.x && index1.y == index2.y;
+	}
+
+	private bool isDiagonal(SquareIndex index1, SquareIndex index2)
+	{
+		return index1.x != index2.x && index1.y != index2.y;
+	}
+
+	private bool isDirectionChange(SquareIndex nextIndex)
+	{
+		List<SquareIndex> indexList = retrieveIndexList();
+		SquareIndex index = indexList[0];
+
+		if (isDiagonal(startIndex, index))
+		{
+			if (nodeList.Count == 1)
+			{
+				return false;
+			}
+			else 
+			{
+				if (isHorizontal(indexList[0], indexList[1])) return !isHorizontal(indexList[1], nextIndex);
+				else return isHorizontal(indexList[1], nextIndex);
+			}
+		}
+		else
+		{
+			if (isHorizontal(startIndex, indexList[0])) return !isHorizontal(indexList[0], nextIndex);
+			else return isHorizontal(indexList[0], nextIndex);
+		}
 	}
 }
