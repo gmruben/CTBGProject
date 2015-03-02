@@ -16,6 +16,8 @@ public class Card : MonoBehaviour
 
 	private CardAction cardAction;
 
+	private Animator animator;
+
 	public void init(CardData cardData)
 	{
 		string playerName = "";
@@ -61,11 +63,18 @@ public class Card : MonoBehaviour
 		cardRenderer.material.SetTexture("_MainTex", cardTexture);
 		imageRenderer.material.SetTexture("_MainTex", imageTexture);
 
+		animator = GetComponent<Animator>();
+
 		cardAction = new CardAction_N04A();
 	}
 
 	public void use()
 	{
 		cardAction.use();
+	}
+
+	public void flip()
+	{
+		animator.Play("Flip");
 	}
 }

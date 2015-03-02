@@ -52,16 +52,16 @@ public class Team
 
 	public void startRound()
 	{
+		/*cardDeck.drawCard();
 		cardDeck.drawCard();
 		cardDeck.drawCard();
-		cardDeck.drawCard();
-		cardDeck.drawCard();
+		cardDeck.drawCard();*/
 	}
 
 	public void startTurn()
 	{
 		_numMoves = GameConfig.NUM_MOVES_IN_TURN;
-
+		cardDeck.drawCard();
 	}
 
 	public void endTurn()

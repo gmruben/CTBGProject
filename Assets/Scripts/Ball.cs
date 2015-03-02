@@ -45,18 +45,20 @@ public class Ball : MonoBehaviour
 		StartCoroutine(updateMove());
 	}
 
-	public void clear(SquareIndex index)
+	public void clear(Player owner, SquareIndex index)
 	{
+		this.owner = owner;
 		this.index = index;
+
 		toMoveSquareList = new List<SquareIndex>();
 
-		int directionX = UnityEngine.Random.Range(-1, 2);
-		int directionY = UnityEngine.Random.Range(-1, 2);
+		int directionX = 0; //UnityEngine.Random.Range(-1, 2);
+		int directionY = -1; //UnityEngine.Random.Range(-1, 2);
 
 		//Check that the direction is not (0, 0)
 		if (directionX == 0 && directionY == 0) directionX = 1;
 
-		int distance = UnityEngine.Random.Range(1, 7);
+		int distance = 10; //UnityEngine.Random.Range(1, 7);
 		for (int i = 0; i < distance; i++)
 		{
 			toMoveSquareList.Add(index + new SquareIndex(directionX, directionY) * i);
@@ -86,7 +88,14 @@ public class Ball : MonoBehaviour
 		{
 			SquareIndex nextSquareIndex = toMoveSquareList[0];
 			Vector2 direction = nextSquareIndex.V2 - index.V2;
-			
+		
+			//Check the new index is in the board
+			if (!board.isOnBounds(nextSquareIndex))
+			{
+				MessageBus.dispatchThrowIn(owner.team.opponentTeam);
+				yield break;
+			}
+
 			Vector3 position = board.squareIndexToWorld(index);
 			Vector3 targetPosition = board.squareIndexToWorld(nextSquareIndex);
 			

@@ -221,7 +221,7 @@ public class Player : MonoBehaviour
 			opponent.loseBall();
 			opponent.setInactive(true);
 
-			ball.clear (opponent.index);
+			ball.clear (this, opponent.index);
 		}
 
 		if (onTackleEnded != null) onTackleEnded();
@@ -253,7 +253,7 @@ public class Player : MonoBehaviour
 
 			opponent.setInactive(true);
 			
-			ball.clear (index);
+			ball.clear (this, index);
 		}
 	}
 

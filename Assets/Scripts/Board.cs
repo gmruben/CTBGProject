@@ -28,6 +28,9 @@ public class Board : MonoBehaviour
 	public BoardPositionList boardTurn;
 	public BoardPositionList boardTime;
 
+	//HACK: Put this in a config class?
+	private List<SquareIndex> goalIndexList;
+
 	public void init()
 	{	
 		origin = new Vector2((float) (-SIZE_X / 2) + (SIZE_SQUARE / 2), (float) (-SIZE_Y / 2));
@@ -77,6 +80,15 @@ public class Board : MonoBehaviour
 
 		p1BoardGoals.init(p1TeamToken.transform, 0);
 		p2BoardGoals.init(p2TeamToken.transform, 0);
+
+		//Create goal index list
+		goalIndexList = new List<SquareIndex>();
+
+		goalIndexList.Add(new SquareIndex(0, 5));
+		goalIndexList.Add(new SquareIndex(0, 6));
+		goalIndexList.Add(new SquareIndex(0, 7));
+		goalIndexList.Add(new SquareIndex(0, 8));
+		goalIndexList.Add(new SquareIndex(0, 9));
 	}
 	
 	public void showRadius(SquareIndex index, int radius, bool squareWithPlayerIn)
@@ -132,58 +144,6 @@ public class Board : MonoBehaviour
 		
 		return indexList;
 	}
-
-	//Calculates the list of indexes involved in a pass/shoot
-	/*public List<SquareIndex> getPassOrShootToSquareList(SquareIndex startIndex, SquareIndex endIndex)
-	{
-		List<SquareIndex> indexList = new List<SquareIndex>();
-		
-		int dx = Mathf.Abs(endIndex.x - startIndex.x);
-		int dy = Mathf.Abs(endIndex.y - startIndex.y);
-		
-		if (dx >= dy) return indexListX(startIndex, endIndex);
-		else return indexListY(startIndex, endIndex);
-	}*/
-
-	//Calculates the list of indexes involved when the direction is closer to x axis
-	/*private List<SquareIndex> indexListX(SquareIndex startIndex, SquareIndex endIndex)
-	{
-		List<SquareIndex> indexList = new List<SquareIndex>();
-		
-		//HACK: This shit makes me really sad (merge with drawShoot)
-		int sign = (int)Mathf.Sign(endIndex.x - startIndex.x);
-		for (int i = (int)startIndex.x + sign; (sign > 0) ? (i <= endIndex.x) : (i >= endIndex.x); i = i + sign)
-		{
-			//HACK: Change these hardcoded values
-			Vector2 start = new Vector2(i, 0);
-			Vector2 end = new Vector2(i, 11);
-			
-			Vector2 point = MathUtil.lineIntersectionPoint(start, end, startIndex.V2, endIndex.V2);
-			indexList.Add(worldToSquareIndex(point));
-		}
-		
-		return indexList;
-	}*/
-	
-	//Calculates the list of indexes involved when the direction is closer to x axis
-	/*private List<SquareIndex> indexListY(SquareIndex startIndex, SquareIndex endIndex)
-	{
-		List<SquareIndex> indexList = new List<SquareIndex>();
-		
-		//HACK: This shit makes me really sad (merge with drawShoot)
-		int sign = (int)Mathf.Sign(endIndex.y - startIndex.y);
-		for (int i = (int)startIndex.y + sign; (sign > 0) ? (i <= endIndex.y) : (i >= endIndex.y); i = i + sign)
-		{
-			//HACK: Change these hardcoded values
-			Vector2 start = new Vector2(0, i);
-			Vector2 end = new Vector2(15, i);
-			
-			Vector2 point = MathUtil.lineIntersectionPoint(start, end, startIndex.V2, endIndex.V2);
-			indexList.Add(worldToSquareIndex(point));
-		}
-		
-		return indexList;
-	}*/
 
 	//Returns a list with all the squares in an area
 	public List<SquareIndex> getSquareListInArea(SquareIndex index, int radius)
@@ -255,6 +215,18 @@ public class Board : MonoBehaviour
 		}
 
 		return playerList;
+	}
+
+	/// <summary>
+	/// Checks wether an index is on a goal or not
+	/// </summary>
+	/// <returns><c>true</c>, if the index is in a goal, <c>false</c> otherwise.</returns>
+	/// <param name="index">The index we want to check</param>
+	/// <param name="onLeft">If the goal is on the left side of the field or not.</param>
+	public bool isIndexInGoal(SquareIndex index, bool onLeftSide)
+	{
+		SquareIndex correctIndex = onLeftSide ? index : inverseIndex(index);
+		return goalIndexList.Contains(correctIndex);
 	}
 
 	public bool isPlayerOnSquare(SquareIndex index)

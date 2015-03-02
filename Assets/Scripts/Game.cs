@@ -122,6 +122,7 @@ public class Game : MonoBehaviour
 
 		MessageBus.UserTurnEnded += userTurnEnded;
 		MessageBus.GoalScored += goalScored;
+		MessageBus.ThrowIn += throwIn;
 	}
 
 	private void onTeamUpdateNumMoves()
@@ -169,7 +170,7 @@ public class Game : MonoBehaviour
 	private void goalScored()
 	{	
 		TurnOverlay turnOverlay = GUICreator.instantiateTurnOverlay();
-		turnOverlay.init("GOAL", onGoalOverlayEnded);
+		turnOverlay.init("GOL", onGoalOverlayEnded);
 	}
 	
 	private void onGoalOverlayEnded()
@@ -181,6 +182,27 @@ public class Game : MonoBehaviour
 
 		board.removeBallFromSquare(ball.index);
 		match.p1Team.playerList[match.p1Team.playerList.Count - 1].giveBall();
+	}
+
+	private void throwIn(Team throwInTeam)
+	{
+		match.currentTeam.endTurn();
+		match.currentTeam = throwInTeam;
+
+		TurnOverlay turnOverlay = GUICreator.instantiateTurnOverlay();
+		turnOverlay.init("SAQUE DE BANDA", onthrowInOverlayEnded);
+	}
+	
+	private void onthrowInOverlayEnded()
+	{
+		match.currentTeam.startTurn();
+		gameHUD.updateNumMoves(match.currentTeam.isP1Team, match.p1Team, match.p2Team);
+
+		//Move a player to the ball index
+		Player player = match.currentTeam.playerList[10];
+
+		player.setPosition(ball.index);
+		player.giveBall();
 	}
 
 	private void resetPlayerPositions()

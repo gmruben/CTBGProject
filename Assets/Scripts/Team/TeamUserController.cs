@@ -75,7 +75,7 @@ public class TeamUserController : TeamController
 		moveArrow.init(board, currentPlayer, team.numMoves, team.numMoves, false, true);
 			
 		moveArrow.onClick += moveTo;
-		//moveArrow.onCancel += cancelMove;
+		moveArrow.onCancel += cancelMove;
 	}
 
 	private void moveTo(List<SquareIndex> indexList)
@@ -85,6 +85,12 @@ public class TeamUserController : TeamController
 
 		team.updateNumMoves(indexList.Count);
 
+		isMenuActive = false;
+		GameObject.Destroy(moveArrow.gameObject);
+	}
+
+	private void cancelMove()
+	{
 		isMenuActive = false;
 		GameObject.Destroy(moveArrow.gameObject);
 	}
@@ -101,6 +107,7 @@ public class TeamUserController : TeamController
 		tackleArrow.init(board, currentPlayer);
 		
 		tackleArrow.onClick += tackleTo;
+		tackleArrow.onCancel += cancelTackle;
 	}
 
 	private void tackleTo(Player opponent)
@@ -110,6 +117,12 @@ public class TeamUserController : TeamController
 		
 		isMenuActive = false;
 		GameObject.Destroy(tackleArrow.gameObject);
+	}
+
+	private void cancelTackle()
+	{
+		isMenuActive = false;
+		GameObject.Destroy(moveArrow.gameObject);
 	}
 
 	private void onTackleEnded()
@@ -124,6 +137,7 @@ public class TeamUserController : TeamController
 		moveArrow.init(board, currentPlayer, currentPlayer.playerData.level, 1, true, false);
 		
 		moveArrow.onClick += passTo;
+		moveArrow.onCancel += cancelPass;
 	}
 
 	private void passTo(List<SquareIndex> indexList)
@@ -131,6 +145,12 @@ public class TeamUserController : TeamController
 		currentPlayer.onPassEnded += onPassEnded;
 		currentPlayer.pass(indexList);
 
+		GameObject.Destroy(moveArrow.gameObject);
+	}
+
+	private void cancelPass()
+	{
+		isMenuActive = false;
 		GameObject.Destroy(moveArrow.gameObject);
 	}
 
@@ -146,18 +166,25 @@ public class TeamUserController : TeamController
 		moveArrow.init(board, currentPlayer, currentPlayer.playerData.level, 1, true, false);
 		
 		moveArrow.onClick += shootTo;
+		moveArrow.onCancel += cancelShoot;
 	}
 
 	private void shootTo(List<SquareIndex> indexList)
 	{
 		//Check that the target index is correct
-		if (indexList[indexList.Count - 1].x == 17)
+		if (board.isIndexInGoal(indexList[indexList.Count - 1], !team.isP1Team))
 		{
 			currentPlayer.shoot(indexList);
 			isMenuActive = false;
 
 			GameObject.Destroy(moveArrow.gameObject);
 		}
+	}
+
+	private void cancelShoot()
+	{
+		isMenuActive = false;
+		GameObject.Destroy(moveArrow.gameObject);
 	}
 
 	private void onCancelButtonClick()
