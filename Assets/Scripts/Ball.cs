@@ -52,13 +52,13 @@ public class Ball : MonoBehaviour
 
 		toMoveSquareList = new List<SquareIndex>();
 
-		int directionX = 0; //UnityEngine.Random.Range(-1, 2);
-		int directionY = -1; //UnityEngine.Random.Range(-1, 2);
+		int directionX = UnityEngine.Random.Range(-1, 2);
+		int directionY = UnityEngine.Random.Range(-1, 2);
 
 		//Check that the direction is not (0, 0)
 		if (directionX == 0 && directionY == 0) directionX = 1;
 
-		int distance = 10; //UnityEngine.Random.Range(1, 7);
+		int distance = UnityEngine.Random.Range(1, 7);
 		for (int i = 0; i < distance; i++)
 		{
 			toMoveSquareList.Add(index + new SquareIndex(directionX, directionY) * i);

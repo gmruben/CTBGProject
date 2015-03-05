@@ -14,6 +14,8 @@ public class Game : MonoBehaviour
 
 	void Awake()
 	{
+		LogMenu.instance.logMessage ("AWAKE");
+
 		if (!StringStore.isInit)
 		{
 			StringStore.onInit += onStringStoreInit;
@@ -26,7 +28,9 @@ public class Game : MonoBehaviour
 	}
 
 	private void onStringStoreInit()
-	{	
+	{
+		LogMenu.instance.logMessage ("STRING INIT");
+
 		if (!File.Exists(Application.persistentDataPath + "/Data/PlayerData.db"))
 		{
 			SqliteUtils.instance.copyDatabaseComplete += copyDatabaseComplete;
@@ -46,6 +50,8 @@ public class Game : MonoBehaviour
 
 	public void init()
 	{
+		LogMenu.instance.logMessage ("INIT");
+
 		board.init();
 		gameHUD.init();
 

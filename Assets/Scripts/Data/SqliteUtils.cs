@@ -27,10 +27,10 @@ public class SqliteUtils : MonoBehaviour
 
     public void initialiseDatabases()
     {
-        numDatabases = 2;
+        numDatabases = 1;
 
         //StartCoroutine(copyDatabaseFromBundle("English"));
-		StartCoroutine(copyDatabaseFromBundle("Spanish"));
+		//StartCoroutine(copyDatabaseFromBundle("Spanish"));
 		//StartCoroutine(copyDatabaseFromBundle("Japanese"));
 
         StartCoroutine(copyDatabaseFromBundle("PlayerData"));

@@ -31,4 +31,10 @@ public class MenuManager
 		GameObject resource = Resources.Load<GameObject>("Prefabs/UI/CheckMenu");
 		return (GameObject.Instantiate(resource) as GameObject).GetComponent<CheckMenu>();
 	}
+
+	public static LogMenu instantiateLogMenu()
+	{
+		GameObject resource = Resources.Load<GameObject>("Prefabs/UI/LogMenu");
+		return (GameObject.Instantiate(resource) as GameObject).GetComponent<LogMenu>();
+	}
 }

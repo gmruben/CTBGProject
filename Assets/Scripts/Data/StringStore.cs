@@ -28,7 +28,7 @@ public class StringStore : MonoBehaviour
 
 	public void init ()
 	{
-		string language = SettingsStore.retrieveSetting<string> (SettingsIds.language);
+		string language = "Spanish"; //SettingsStore.retrieveSetting<string> (SettingsIds.language);
 		idList = new Dictionary<string, string> ();
 
 		StartCoroutine(readLanguage(language));
